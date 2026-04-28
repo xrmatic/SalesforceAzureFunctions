@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "SERVICE_BUS_NAMESPACE": "<your-servicebus-namespace>.servicebus.windows.net",
+    "SERVICE_BUS_TOPIC_NAME": "<your-topic-name>",
+    "SALESFORCE_INSTANCE_URL": "https://<your-instance>.salesforce.com",
+    "SALESFORCE_CLIENT_ID": "<connected-app-client-id>",
+    "SALESFORCE_CLIENT_SECRET": "<connected-app-client-secret>",
+    "CENSUS_API_KEY": "<your-census-api-key>",
+    "KEY_VAULT_URI": "https://<your-keyvault>.vault.azure.net"
+  }
+}
