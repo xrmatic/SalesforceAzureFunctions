@@ -81,11 +81,11 @@ async function fetchAcsDemographics(
   const variables = [
     'B19013_001E', // Median household income
     'B01003_001E', // Total population
+    'B15003_001E', // Total population 25 years and over (education denominator)
     'B15003_022E', // Bachelor's degree
     'B15003_023E', // Master's degree
     'B15003_024E', // Professional school degree
     'B15003_025E', // Doctorate degree
-    'B15003_017E', // High school diploma (used as base for % calc)
   ].join(',');
 
   const params: Record<string, string> = {
@@ -132,18 +132,17 @@ async function fetchAcsDemographics(
 
   const medianHouseholdIncome = getValue('B19013_001E');
   const totalPopulation = getValue('B01003_001E');
+  const pop25Plus = getValue('B15003_001E');
 
-  // Education percentage: (bachelor + master + professional + doctorate) / total 25+ pop
+  // Education percentage: (bachelor + master + professional + doctorate) / total 25+ population
   const educatedPop =
     getValue('B15003_022E') +
     getValue('B15003_023E') +
     getValue('B15003_024E') +
     getValue('B15003_025E');
 
-  // B15003_017E is not the 25+ total; use total pop as approximation for denominator
-  // In production, use B15003_001E (total 25+) but it's not in this variable set
   const percentBachelorOrHigher =
-    totalPopulation > 0 ? (educatedPop / totalPopulation) * 100 : 0;
+    pop25Plus > 0 ? (educatedPop / pop25Plus) * 100 : 0;
 
   return {
     congressionalDistrictGeoId: districtGeoId,

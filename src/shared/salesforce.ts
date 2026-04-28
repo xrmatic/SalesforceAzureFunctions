@@ -10,6 +10,9 @@ import {
 /** Maximum number of records per Salesforce Composite API batch */
 const COMPOSITE_BATCH_SIZE = 200;
 
+/** Salesforce REST API version */
+const SF_API_VERSION = 'v60.0';
+
 /** Cache token to avoid re-fetching on every invocation */
 let cachedToken: { accessToken: string; instanceUrl: string; expiresAt: number } | null = null;
 
@@ -101,7 +104,7 @@ export async function updateSalesforceRecords(
   // Split into COMPOSITE_BATCH_SIZE chunks
   for (let i = 0; i < records.length; i += COMPOSITE_BATCH_SIZE) {
     const batch = records.slice(i, i + COMPOSITE_BATCH_SIZE);
-    const url = `${instanceUrl}/services/data/v60.0/composite`;
+    const url = `${instanceUrl}/services/data/${SF_API_VERSION}/composite`;
 
     const response = await axios.post<SalesforceCompositeResponse>(
       url,
@@ -144,7 +147,7 @@ export function buildAccountUpdateRequest(
 ): SalesforceCompositeRecord {
   return {
     method: 'PATCH',
-    url: `/services/data/v60.0/sobjects/Account/${accountId}`,
+    url: `/services/data/${SF_API_VERSION}/sobjects/Account/${accountId}`,
     referenceId,
     body: fields,
   };
